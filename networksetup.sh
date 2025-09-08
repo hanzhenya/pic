@@ -1,12 +1,15 @@
 #!/bin/zsh
 # macOS Wi-Fi 网络切换脚本
 # Author: hanzhenya
-# Version: 1.3 (zsh + tty compatible)
+# Version: 1.4 (zsh + tty safe)
 # Description:
 #   通过一键选择切换 DHCP / 静态 IP 配置
-#   支持直接 curl | zsh 执行，保证交互正常
+#   保证交互输入可用 (支持 curl | zsh / 本地运行)
 
 set -e
+
+# 强制输入从真实终端读取，避免被管道覆盖
+exec < /dev/tty
 
 # 确认运行环境
 if [[ "$(uname)" != "Darwin" ]]; then
@@ -62,8 +65,7 @@ while true; do
     echo "2) iPhone USB"
     echo "3) ROUTER251"
     echo "q) 退出"
-    # 强制从 /dev/tty 读取输入，避免管道下丢失交互
-    read "choice?输入选择: " < /dev/tty
+    read "choice?输入选择: "
 
     case "$choice" in
         0)

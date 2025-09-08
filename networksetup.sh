@@ -1,7 +1,7 @@
 #!/bin/zsh
 # macOS Wi-Fi 网络切换脚本
-# Author: YourName
-# Version: 1.1
+# Author: hanzhenya
+# Version: 1.2 (zsh compatible)
 # Description:
 #   通过一键选择切换 DHCP / 静态 IP 配置
 #   仅支持 macOS (networksetup 工具)
@@ -29,7 +29,7 @@ if [ -z "$WIFI_DEVICE" ]; then
 fi
 
 # 定义网络配置（可扩展）
-declare -A NET_IP NET_GW NET_DNS1 NET_DNS2
+typeset -A NET_IP NET_GW NET_DNS1 NET_DNS2
 NET_IP[ROUTER253]="192.168.31.218"
 NET_GW[ROUTER253]="192.168.31.253"
 NET_DNS1[ROUTER253]="192.168.31.253"
@@ -62,9 +62,7 @@ while true; do
     echo "2) iPhone USB"
     echo "3) ROUTER251"
     echo "q) 退出"
-    echo -n "输入选择: "
-    read choice
-
+    read "?输入选择: " choice
 
     case "$choice" in
         0)
